@@ -31,16 +31,16 @@ ORIGIN=`git config --get remote.origin.url`
 
 if [ "$BRANCH" != "master" ]; then
   echo "Error: Switch to the master branch before publishing."
-  exit
+  exit 1
 fi
 
-if [ "$ORIGIN" != "https://github.com/tensorflow/tfjs.git" ]; then
+if ! [[ "$ORIGIN" =~ tensorflow/tfjs ]]; then
   echo "Error: Switch to the main repo (tensorflow/tfjs) before publishing."
-  exit
+  exit 1
 fi
 
 yarn build-npm
 ./scripts/make-version # This is for safety in case you forgot to do 2).
-npm publish
 ./scripts/tag-version
+npm publish
 echo 'Yay! Published a new package to npm.'

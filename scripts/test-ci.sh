@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright 2018 Google LLC. All Rights Reserved.
+# Copyright 2019 Google LLC. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,10 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-rimraf dist/
-yarn
 yarn build
-rollup -c
-echo "Stored standalone library at dist/tf(.min).js"
-npm pack
+yarn lint
+yarn ts-node ./scripts/release_notes/run_tests.ts
+yarn karma start --browsers='bs_firefox_mac,bs_chrome_mac' --singleRun
+cd integration_tests/benchmarks
+yarn benchmark-cloud
+cd ../../

@@ -5,3 +5,8 @@ npm-debug.log
 dist/
 tensorflow-tfjs-*.tgz
 yarn-error.log
+.yalc/
+yalc.lock
+.rpt2_cache/
+package
+release-notes.md
